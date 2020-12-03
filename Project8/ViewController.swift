@@ -16,12 +16,15 @@ class ViewController: UIViewController {
     
     var activatedButtons = [UIButton]()
     var solutions = [String]()
+    
+    var incorrectAnswer = 0
 
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
+    
     var level = 1
     
     override func loadView() {
@@ -72,6 +75,8 @@ class ViewController: UIViewController {
         view.addSubview(clear)
         
         let buttonsView = UIView()
+        buttonsView.layer.borderWidth = 1
+        buttonsView.layer.borderColor = UIColor.lightGray.cgColor
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonsView)
         
@@ -106,8 +111,6 @@ class ViewController: UIViewController {
             buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
-
-            // more constraints to be added here!
         ])
         
         // set some values for the width and height of each button
@@ -136,10 +139,6 @@ class ViewController: UIViewController {
                 letterButtons.append(letterButton)
             }
         }
-        
-//        cluesLabel.backgroundColor = .red
-//        answersLabel.backgroundColor = .blue
-//        buttonsView.backgroundColor = .magenta
     }
 
     override func viewDidLoad() {
@@ -167,11 +166,24 @@ class ViewController: UIViewController {
             currentAnswer.text = ""
             score += 1
 
-            if score % 7 == 0 {
+            if (((score - incorrectAnswer) % 7 == 0) && level == 1) {
                 let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+            
+            else if (((score - incorrectAnswer) % 7 == 0) && level == 2) {
+                let ac = UIAlertController(title: "Well done!", message: "You have completed all of the levels!", preferredStyle: .alert)
+                present(ac, animated: true)
+            }
+        }
+        
+        else {
+            let ac = UIAlertController(title: "Incorrect!", message: "Please enter a different answer.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
+            present(ac, animated: true)
+            incorrectAnswer -= 1
+            score -= 1
         }
     }
 
@@ -235,6 +247,9 @@ class ViewController: UIViewController {
         for btn in letterButtons {
             btn.isHidden = false
         }
+        
+        score = 0
+        incorrectAnswer = 0
     }
 
 
