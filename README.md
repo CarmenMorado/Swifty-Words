@@ -1,5 +1,5 @@
 # Swifty-Words
-Word game based on the popular indie game 7 Little Words. Users are going to see a list of hints and an array of buttons with different letters and need to use those buttons to enter words matching the hints. Throughout the course of this project, I familiarized myself with building a UIKit user interface programmatically,
+100 Days of Swift (Project 8) Word game based on the popular indie game 7 Little Words. Users are going to see a list of hints and an array of buttons with different letters and need to use those buttons to enter words matching the hints. Throughout the course of this project, I familiarized myself with building a UIKit user interface programmatically,
 the firstIndex(of:) and joined() methods, and property observers (didSet). 
 
 In addition, I completed the following challenges:
